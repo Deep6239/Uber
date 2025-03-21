@@ -103,3 +103,61 @@ Logout the currently authenticated user and invalidate their token.
 }
 ```
 
+## /captains/register
+
+### Description
+Used to register a new captain with vehicle details. 
+
+### Request
+**Method:** POST  
+**URL:** `/captains/register`
+
+**Body format:**
+```json
+{
+  "fullname": {
+    "firstname": "John",
+    "lastname": "Doe"
+  },
+  "email": "johndoe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "black",
+    "plate": "ABC-123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+### Validation Rules
+- `email`: Must be valid email format
+- `fullname.firstname`: Minimum 3 characters
+- `password`: Minimum 6 characters
+- `vehicle.color`: Minimum 3 characters
+- `vehicle.plate`: Minimum 3 characters  
+- `vehicle.capacity`: Must be integer greater than 0
+- `vehicle.vehicleType`: Must be one of: "car", "motorcycle", "auto"
+
+### Response
+- **201**: Captain created successfully
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com",
+    "vehicle": {
+      "color": "black", 
+      "plate": "ABC-123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  },
+  "token": "JWT_TOKEN"
+}
+```
+- **400**: Validation errors or captain already exists
+
