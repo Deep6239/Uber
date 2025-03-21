@@ -161,3 +161,97 @@ Used to register a new captain with vehicle details.
 ```
 - **400**: Validation errors or captain already exists
 
+## /captains/login
+
+### Description
+Authenticate an existing captain.
+
+### Request
+**Method:** POST  
+**URL:** `/captains/login`
+
+**Body format:**
+```json
+{
+  "email": "johndoe@example.com",
+  "password": "password123"
+}
+```
+
+### Response
+- **200**: Successfully logged in
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com",
+    "vehicle": {
+      "color": "black",
+      "plate": "ABC-123", 
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  },
+  "token": "JWT_TOKEN"
+}
+```
+- **401**: Invalid credentials
+- **400**: Validation errors
+
+## /captains/profile 
+
+### Description
+Get the profile information of the currently authenticated captain.
+
+### Request
+**Method:** GET  
+**URL:** `/captains/profile`
+
+**Headers:**
+- `Authorization`: Bearer {token}
+
+### Response
+- **200**: Returns captain profile data
+```json
+{
+  "captain": {
+    "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+    },
+    "email": "johndoe@example.com",
+    "vehicle": {
+      "color": "black",
+      "plate": "ABC-123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+  }
+}
+```
+- **401**: Unauthorized - Invalid or missing token
+
+## /captains/logout
+
+### Description
+Logout the currently authenticated captain and invalidate their token.
+
+### Request
+**Method:** GET  
+**URL:** `/captains/logout`
+
+**Headers:**
+- `Authorization`: Bearer {token}
+
+### Response
+- **200**: Successfully logged out
+```json
+{
+  "message": "Logout successfully"
+}
+```
+- **401**: Unauthorized - Invalid or missing token
+
